@@ -41,7 +41,10 @@ const cat = async () => {
 // 3 Create a function that uses the fetch function to make a request to the "dogs" URL and returns
 // the naughtiest dog - expected return value {name: "Mutley", naughty: 10} of type Object
 
-const dog = () => {};
+const dog = async () => {
+    const response = await fetch('dogs');
+    return response.data.dogs.find(x => Math.max(x.naughty));
+};
 
 // 4 Create a function that uses the fetch function to make requests to the "jokes" URL and returns
 // a joke object with the key of question and answer - expected return { 
@@ -53,7 +56,13 @@ const dog = () => {};
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
 //
 
-const joke = () => {};
+const joke = async () => {
+    const responses = await Promise.all([fetch('jokes','question'),fetch('jokes')]);
+    return {
+        question: responses[0].joke,
+        answer: responses[1].answer
+    };
+};
 
 module.exports = {
     food,
